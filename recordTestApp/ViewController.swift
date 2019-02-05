@@ -90,9 +90,6 @@ class ViewController: UIViewController, AVAudioRecorderDelegate, AVAudioPlayerDe
             userDefaults.set(audioFileArray, forKey: "stringsArray")
             userDefaults.set(url, forKey: audioFileArray.last!)
             userDefaultsIsNil = false
-            userDefaults.set("太郎", forKey: "userNameForKey")
-            let userName = userDefaults.string(forKey: "userNameForKey")
-            print(userName)
             //初期値がtrue(userDefaultsには何も入っていない)なので、falseにしたuserDefaultsIsNilを保存する
             userDefaults.set(userDefaultsIsNil, forKey: "nilFlag")
             self.tableView.reloadData()
