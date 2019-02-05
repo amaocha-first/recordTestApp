@@ -13,12 +13,15 @@ class ViewController: UIViewController, AVAudioRecorderDelegate, AVAudioPlayerDe
     
     @IBOutlet weak var tableView: UITableView!
     
+    var audioFileArray: [String] = []
+    
+    //オーディオ関係の変数
     var audioRecorder: AVAudioRecorder!
     var audioPlayer: AVAudioPlayer!
     var isRecording = false
     var isPlaying = false
     
-    var audioFileArray: [String] = []
+    //データ保存関係の変数
     var url : URL?
     var urlArray: [URL] = []
     let userDefaults = UserDefaults.standard
@@ -38,9 +41,6 @@ class ViewController: UIViewController, AVAudioRecorderDelegate, AVAudioPlayerDe
                 urlArray.append(getURL!)
                 print(getURL)
             }
-
-        } else {
-            print("userdefaultsはnilだよ")
         }
         
         // ボタンのインスタンス生成
@@ -84,13 +84,15 @@ class ViewController: UIViewController, AVAudioRecorderDelegate, AVAudioPlayerDe
         } else {
             
             audioRecorder.stop()
-            print("audioRecorder was stoped!")
             isRecording = false
             
             //urlの文字列が入ったstringsを"stringsArray"というForKeyで保存
             userDefaults.set(audioFileArray, forKey: "stringsArray")
             userDefaults.set(url, forKey: audioFileArray.last!)
             userDefaultsIsNil = false
+            userDefaults.set("太郎", forKey: "userNameForKey")
+            let userName = userDefaults.string(forKey: "userNameForKey")
+            print(userName)
             //初期値がtrue(userDefaultsには何も入っていない)なので、falseにしたuserDefaultsIsNilを保存する
             userDefaults.set(userDefaultsIsNil, forKey: "nilFlag")
             self.tableView.reloadData()
@@ -98,22 +100,25 @@ class ViewController: UIViewController, AVAudioRecorderDelegate, AVAudioPlayerDe
     }
     
     func getURL() -> URL{
+        //現在時刻をURL化するために必要な変数
         let paths = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
         let docsDirect = paths[0]
-        //現在時刻をString型で取得
+        //現在時刻をString型に変換して取得
         let now: String = "\(NSDate())"
+        //nowをURLに変換してurlに代入
         url = docsDirect.appendingPathComponent(now)
-        audioFileArray.append(now)
+        //そのurlを配列に追加
         urlArray.append(url!)
+        //また、String型配列のaudioFileArrayに現在時刻をだ追加
+        audioFileArray.append(now)
+        
         return url!
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
         if !isPlaying {
-            //let audioFileURLArrayAnyToURL = audioFileArray[indexPath.row] as! [URL]
-            
-
+        
             audioPlayer = try! AVAudioPlayer(contentsOf: urlArray[indexPath.row])
             audioPlayer.delegate = self
             audioPlayer.play()
