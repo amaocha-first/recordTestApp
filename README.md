@@ -1,7 +1,8 @@
 
 # recordTestApp
 
-![demo](https://github.com/amaocha-first/recordTestApp/blob/media/recordTestAppDemo.gif)
+![demo](https://github.com/amaocha-first/recordTestApp/blob/media/recordTestAppDemo.gif)  
+gifだと音声が出ないので、mp4のファイルか下のブログで、音声ありのDemoを視聴できます。
 
 現在、制作中のオリジナルアプリで録音機能を実装する予定だったので、そのテスト用で制作しました。  
 教材などはなく、自分で調べながら実装しました。  
